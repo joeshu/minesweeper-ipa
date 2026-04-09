@@ -35,7 +35,7 @@ jobs:
           -configuration Release \
           -sdk iphoneos \
           -destination generic/platform=iOS \
-          -derivedDataPath build/DerivedData \
+          CONFIGURATION_BUILD_DIR="$PWD/build/Release-iphoneos" \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
@@ -43,7 +43,7 @@ jobs:
 
     - name: Verify built app
       run: |
-        APP_PATH="build/DerivedData/Build/Products/Release-iphoneos/Minesweeper.app"
+        APP_PATH="build/Release-iphoneos/Minesweeper.app"
         test -d "$APP_PATH"
         ls -la "$APP_PATH"
 
@@ -51,7 +51,7 @@ jobs:
       run: |
         rm -rf build/Payload build/Minesweeper-unsigned.ipa
         mkdir -p build/Payload
-        cp -R "build/DerivedData/Build/Products/Release-iphoneos/Minesweeper.app" build/Payload/
+        cp -R "build/Release-iphoneos/Minesweeper.app" build/Payload/
         cd build
         zip -qry "Minesweeper-unsigned.ipa" Payload
 
